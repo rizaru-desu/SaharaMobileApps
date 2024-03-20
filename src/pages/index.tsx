@@ -1,0 +1,11 @@
+export {default as SplashPage} from './splashPage';
+export {default as LandingPage} from './landingPage';
+export {default as LoginPage} from './loginPage';
+export {default as ForgotPassPage} from './forgotPage';
+export {default as SignUpPage} from './signUpPage';
+export {default as HomePage} from './initializePage';
+export {default as CreateDRPage} from './createDRPage';
+export {default as AddBooth} from './addBoothPage';
+export {default as ProductDRPage} from './productDRPage';
+export {default as ScanQRPage} from './scanQRPage';
+export {default as SettingPage} from './settingPage';
