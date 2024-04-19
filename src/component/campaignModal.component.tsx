@@ -4,7 +4,7 @@ import {verticalScale as h, scale as w} from 'react-native-size-matters';
 import Modal from 'react-native-modal';
 import {Colors, Fonts} from '../assets/assets';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {Button, IconButton} from '@react-native-material/core';
+import {IconButton} from '@react-native-material/core';
 import FastImage from 'react-native-fast-image';
 import Carousel from 'react-native-reanimated-carousel';
 import {useDispatch} from 'react-redux';

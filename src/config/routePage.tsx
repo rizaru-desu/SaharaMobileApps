@@ -12,6 +12,7 @@ import {
   HomePage,
   SettingPage,
   AddBooth,
+  RedeemPage,
 } from '../pages';
 
 const Stack = createStackNavigator();
@@ -37,6 +38,11 @@ function RoutePages() {
         name="settingPage"
         options={{title: 'Setting'}}
         component={SettingPage}
+      />
+      <Stack.Screen
+        name="redeemPage"
+        options={{title: 'Redeem Package'}}
+        component={RedeemPage}
       />
     </Stack.Navigator>
   );

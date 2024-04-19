@@ -11,13 +11,14 @@ const PointHistory: React.FC<{
   previlege?: number;
   historyPoint?: any;
 }> = ({previlege, historyPoint}) => {
-  if (previlege === 1) {
+  if (previlege === 1 || previlege === 2) {
     return (
       <React.Fragment>
         <Text style={styles.labelTitle}>History Point</Text>
         <DropShadow style={styles.dropShadow}>
           <ScrollView
             nestedScrollEnabled
+            showsVerticalScrollIndicator={false}
             style={[styles.containerBorder, {maxHeight: h(250)}]}>
             {!_.isEmpty(historyPoint) ? (
               _.map(historyPoint, (item: any, index: number) => (

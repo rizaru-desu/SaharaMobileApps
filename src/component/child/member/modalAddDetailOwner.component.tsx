@@ -47,7 +47,7 @@ const ModalNewOwner: React.FC<{
               alamatOwner: '',
               instagram: '',
               facebook: '',
-              ecommerce: '',
+              eCommerce: '',
               berdiriSejak: '',
             }}
             onSubmit={values => {
@@ -133,7 +133,7 @@ const ModalNewOwner: React.FC<{
                 <View style={styles.containerTextInput}>
                   <Text style={styles.label}>Ecommerce</Text>
                   <TextInput
-                    placeholder="Please enter username the ecommerce"
+                    placeholder="Please enter username the eCommerce"
                     variant="outlined"
                     leading={
                       <Icon
@@ -146,12 +146,12 @@ const ModalNewOwner: React.FC<{
                     inputStyle={styles.inputStyle}
                     onChangeText={handleChange('eCommerce')}
                     onBlur={handleBlur('eCommerce')}
-                    value={values.ecommerce}
+                    value={values.eCommerce}
                   />
                 </View>
 
-                {errors.ecommerce && (
-                  <Text style={styles.errorLabel}>{errors.ecommerce}</Text>
+                {errors.eCommerce && (
+                  <Text style={styles.errorLabel}>{errors.eCommerce}</Text>
                 )}
 
                 <View style={styles.containerTextInput}>
@@ -230,6 +230,11 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.family.bold,
   },
   labelButton: {fontFamily: Fonts.family.bold, color: 'white'},
+  labelTitle: {
+    fontFamily: Fonts.family.bold,
+    fontSize: Fonts.size.md,
+    color: 'white',
+  },
 });
 
 export default ModalNewOwner;

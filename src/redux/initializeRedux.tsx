@@ -31,6 +31,7 @@ interface InitialState {
   productDR: any[];
   refreshDR: boolean;
   refreshProductDR: boolean;
+  refreshMember: boolean;
 }
 
 const initialState: InitialState = {
@@ -45,6 +46,7 @@ const initialState: InitialState = {
   productDR: [],
   refreshDR: false,
   refreshProductDR: false,
+  refreshMember: false,
 };
 
 export const ReduxSlice = createSlice({
@@ -81,6 +83,9 @@ export const ReduxSlice = createSlice({
     setRefreshProductDR: (state, action) => {
       state.refreshProductDR = action.payload.refreshProductDR;
     },
+    setRefreshMember: (state, action) => {
+      state.refreshMember = action.payload.refreshMember;
+    },
   },
 });
 
@@ -95,6 +100,7 @@ export const {
   setRefreshDR,
   setRefreshProductDR,
   setShowCampaign,
+  setRefreshMember,
 } = ReduxSlice.actions;
 
 const alertUseable = ({
@@ -254,6 +260,7 @@ export const getDahsboardMember = async ({
               showCampaign: !_.isEmpty(result?.campaign) ? true : false,
             }),
           );
+          dispatch(setRefreshMember({refreshMember: false}));
         }
       } catch (error: any) {
         Loading.hide();

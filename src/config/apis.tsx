@@ -21,10 +21,12 @@ export const ADD_BOOTH = 'addBooth';
 export const FIND_USER_BOOTH = 'findUserBooth';
 export const ADD_USER_BOOTH = 'AddBooth';
 export const ADD_POINT_LOYALTY = 'addPointUser';
+export const PACKAGE_REDEEM = 'dashboardPackageRedeem';
+export const CLAIM_REDEEM = 'claimRedeem';
 
 export const SaharaClient = axios.create({
   baseURL: process.env.NODE_ENV === 'development' ? DEMO_URL : PROD_URL,
-  timeout: 30000,
+  timeout: 90000,
 });
 
 export const notAuth = () => {

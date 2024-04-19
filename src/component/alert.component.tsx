@@ -80,6 +80,9 @@ export const AlertBase = () => {
         if (autoDismiss) {
           setTimeout(() => {
             setModalVisible(false);
+            if (onDismissRef.current) {
+              onDismissRef.current();
+            }
           }, 3000);
         }
       },

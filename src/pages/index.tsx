@@ -9,3 +9,4 @@ export {default as AddBooth} from './addBoothPage';
 export {default as ProductDRPage} from './productDRPage';
 export {default as ScanQRPage} from './scanQRPage';
 export {default as SettingPage} from './settingPage';
+export {default as RedeemPage} from './redeemPage';

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {
+  RefreshControl,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -10,7 +11,7 @@ import {
 } from 'react-native';
 import {NavigationProp} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
-import {getInitialize} from '../redux/initializeRedux';
+import {getInitialize, setRefreshMember} from '../redux/initializeRedux';
 import {Fonts, Images} from '../assets/assets';
 import {useAppSelector} from '../config/useRedux';
 import {verticalScale as h} from 'react-native-size-matters';
@@ -41,6 +42,7 @@ function Page({navigation}: PageProps): JSX.Element {
     previlege,
     addDetailOwner,
     showCampaign,
+    refreshMember,
   } = useAppSelector(state => state.initInitializeRedux);
 
   React.useEffect(() => {
@@ -50,6 +52,11 @@ function Page({navigation}: PageProps): JSX.Element {
 
     return unsubscribe;
   }, [dispatch, navigation]);
+
+  const onRefresh = React.useCallback(() => {
+    dispatch(setRefreshMember({refreshList: true}));
+    getInitialize({dispatch});
+  }, [dispatch]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -74,7 +81,17 @@ function Page({navigation}: PageProps): JSX.Element {
 
         <View style={styles.containerDashboard}>
           {previlege === 1 || previlege === 2 ? (
-            <ScrollView nestedScrollEnabled contentContainerStyle={{gap: 20}}>
+            <ScrollView
+              refreshControl={
+                <RefreshControl
+                  refreshing={refreshMember}
+                  onRefresh={onRefresh}
+                  progressViewOffset={-10000}
+                />
+              }
+              showsVerticalScrollIndicator={false}
+              nestedScrollEnabled
+              contentContainerStyle={{gap: 20}}>
               <DetailOwner
                 previlege={previlege}
                 dataOwner={dataDashboardMember}
@@ -99,16 +116,24 @@ function Page({navigation}: PageProps): JSX.Element {
 
           <DropShadow style={styles.dropShadow}>
             <View style={styles.containerTabMenu}>
-              {previlege === 1 && (
-                <TouchableOpacity style={styles.containerTabButton}>
-                  <Icon
-                    name="wallet-giftcard"
-                    size={Fonts.size.xl}
-                    color={'white'}
-                  />
-                  <Text>Redem Point</Text>
-                </TouchableOpacity>
-              )}
+              {previlege === 1 ||
+                (previlege === 2 && (
+                  <TouchableOpacity
+                    style={styles.containerTabButton}
+                    onPress={() => {
+                      navigate({
+                        route: 'redeemPage',
+                        params: {title: 'Redeem Package'},
+                      });
+                    }}>
+                    <Icon
+                      name="wallet-giftcard"
+                      size={Fonts.size.xl}
+                      color={'white'}
+                    />
+                    <Text>Redem Point</Text>
+                  </TouchableOpacity>
+                ))}
 
               {previlege === 3 && (
                 <TouchableOpacity
@@ -141,7 +166,10 @@ function Page({navigation}: PageProps): JSX.Element {
       </LinearGradient>
 
       <CampaignModal
-        isVisible={previlege === 1 && !addDetailOwner && showCampaign}
+        isVisible={
+          (previlege === 1 && !addDetailOwner && showCampaign) ||
+          (previlege === 2 && showCampaign)
+        }
         campaignData={dataDashboardMember?.campaign}
       />
       <ModalNewOwner invisible={previlege === 1 && addDetailOwner} />

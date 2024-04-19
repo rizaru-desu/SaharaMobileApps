@@ -1,5 +1,10 @@
 import {configureStore} from '@reduxjs/toolkit';
-import {InitializeSlize, addBoothSlice, createDRSlice} from '../redux';
+import {
+  InitializeSlize,
+  addBoothSlice,
+  createDRSlice,
+  redeemSlice,
+} from '../redux';
 
 import reactotron from './reactotron';
 
@@ -8,6 +13,7 @@ export const store = configureStore({
     initInitializeRedux: InitializeSlize,
     initCreateDRRedux: createDRSlice,
     initAddBoothRedux: addBoothSlice,
+    initRedeemRedux: redeemSlice,
   },
   middleware: getDefaultMiddleware => getDefaultMiddleware(),
   enhancers: getDefaultEnhancers =>
