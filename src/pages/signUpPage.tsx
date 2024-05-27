@@ -4,12 +4,12 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  TextInput as TxI,
   View,
 } from 'react-native';
 import {Colors, Fonts, Images} from '../assets/assets';
 import {verticalScale as h} from 'react-native-size-matters';
 import {Formik, useFormikContext} from 'formik';
-import {Button, TextInput} from '@react-native-material/core';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useMaskedInputProps} from 'react-native-mask-input';
 import {replace} from '../config/refNavigation';
@@ -139,21 +139,13 @@ function Page(): JSX.Element {
         <View style={styles.containerImage}>
           <FastImage
             style={{width: h(100), height: h(100)}}
-            source={Images.logoSahara}
-            resizeMode={FastImage.resizeMode.contain}
-          />
-
-          <FastImage
-            style={{width: h(100), height: h(100)}}
-            source={Images.logoSignUp}
+            source={Images.logoN}
             resizeMode={FastImage.resizeMode.contain}
           />
         </View>
 
         <View style={styles.containerForm}>
-          <Text style={styles.titleLogin}>
-            Join Us: Create Your Account Today!
-          </Text>
+          <Text style={styles.titleLogin}>Create an Account</Text>
           <Formik
             validationSchema={formSchema}
             initialValues={{
@@ -175,22 +167,22 @@ function Page(): JSX.Element {
             }) => (
               <View style={styles.containerTextInput}>
                 <View style={styles.containerTextInput}>
-                  <Text style={styles.label}>Fullname</Text>
-                  <TextInput
-                    placeholder="Please enter the fullname"
-                    variant="outlined"
-                    leading={
-                      <Icon
-                        name="card-account-details"
-                        size={Fonts.size.md}
-                        color={Colors.primary}
-                      />
-                    }
-                    color={Colors.primary}
-                    inputStyle={styles.inputStyle}
+                  <TxI
+                    style={{
+                      backgroundColor: 'white',
+                      borderRadius: 100,
+                      paddingHorizontal: 20,
+                      color: 'black',
+                      fontFamily: Fonts.family.regular,
+                      fontSize: Fonts.size.lg,
+                      borderColor: 'black',
+                      borderWidth: 1,
+                    }}
+                    placeholder="Fullname"
                     onChangeText={handleChange('fullname')}
                     onBlur={handleBlur('fullname')}
                     value={values.fullname}
+                    placeholderTextColor={'#b3b3b3'}
                   />
                 </View>
 
@@ -200,34 +192,29 @@ function Page(): JSX.Element {
 
                 <PhoneInput />
 
-                <View style={styles.containerTextInput}>
-                  <Text style={styles.label}>Date of Birth</Text>
-                  <TextInput
-                    placeholder="Please enter the date of birth"
-                    variant="outlined"
-                    leading={
-                      <Icon
-                        name="calendar"
-                        size={Fonts.size.md}
-                        color={Colors.primary}
-                      />
-                    }
-                    trailing={
-                      <TouchableOpacity onPress={() => setShowDate(true)}>
-                        <Icon
-                          name="calendar-edit"
-                          size={Fonts.size.md}
-                          color={Colors.primary}
-                        />
-                      </TouchableOpacity>
-                    }
-                    color={Colors.primary}
-                    inputStyle={styles.inputStyle}
+                <TouchableOpacity
+                  onPress={() => {
+                    setShowDate(true);
+                  }}
+                  style={styles.containerTextInput}>
+                  <TxI
+                    style={{
+                      backgroundColor: 'white',
+                      borderRadius: 100,
+                      paddingHorizontal: 20,
+                      color: 'black',
+                      fontFamily: Fonts.family.regular,
+                      fontSize: Fonts.size.lg,
+                      borderColor: 'black',
+                      borderWidth: 1,
+                    }}
+                    placeholder="Date of birth"
                     onBlur={handleBlur('bornDate')}
                     value={values.bornDate}
                     readOnly
+                    placeholderTextColor={'#b3b3b3'}
                   />
-                </View>
+                </TouchableOpacity>
 
                 <DatePicker
                   modal
@@ -252,6 +239,72 @@ function Page(): JSX.Element {
                   <Text style={styles.errorLabel}>{errors.bornDate}</Text>
                 )}
 
+                <View style={styles.containerTextInput}>
+                  <TxI
+                    style={{
+                      backgroundColor: 'white',
+                      borderRadius: 100,
+                      paddingHorizontal: 20,
+                      color: 'black',
+                      fontFamily: Fonts.family.regular,
+                      fontSize: Fonts.size.lg,
+                      borderColor: 'black',
+                      borderWidth: 1,
+                    }}
+                    placeholder="Email"
+                    onChangeText={handleChange('email')}
+                    keyboardType="email-address"
+                    onBlur={handleBlur('email')}
+                    value={values.email}
+                    placeholderTextColor={'#b3b3b3'}
+                  />
+                </View>
+
+                {errors.email && (
+                  <Text style={styles.errorLabel}>{errors.email}</Text>
+                )}
+
+                <View style={styles.containerTextInput}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      backgroundColor: 'white',
+                      borderRadius: 100,
+                      paddingHorizontal: 20,
+                      borderColor: 'black',
+                      borderWidth: 1,
+                      alignItems: 'center',
+                    }}>
+                    <TxI
+                      style={{
+                        width: '95%',
+                        color: 'black',
+                        fontFamily: Fonts.family.regular,
+                        fontSize: Fonts.size.lg,
+                      }}
+                      placeholder="Password"
+                      onChangeText={handleChange('password')}
+                      onBlur={handleBlur('password')}
+                      value={values.password}
+                      secureTextEntry={!showPass}
+                      autoCapitalize="none"
+                      keyboardType="default"
+                      placeholderTextColor={'#b3b3b3'}
+                    />
+                    <TouchableOpacity onPress={() => setShowPass(!showPass)}>
+                      <Icon
+                        name={showPass ? 'eye-off' : 'eye'}
+                        size={Fonts.size.xl}
+                        color={Colors.primary}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+
+                {errors.password && (
+                  <Text style={styles.errorLabel}>{errors.password}</Text>
+                )}
+
                 <RadioGroup
                   radioButtons={radioButtons}
                   onPress={handleChange('roles')}
@@ -264,71 +317,17 @@ function Page(): JSX.Element {
                   }}
                 />
 
-                <View style={styles.containerTextInput}>
-                  <Text style={styles.label}>Email</Text>
-                  <TextInput
-                    placeholder="Please enter the email address"
-                    variant="outlined"
-                    leading={
-                      <Icon
-                        name="email"
-                        size={Fonts.size.md}
-                        color={Colors.primary}
-                      />
-                    }
-                    color={Colors.primary}
-                    inputStyle={styles.inputStyle}
-                    onChangeText={handleChange('email')}
-                    keyboardType="email-address"
-                    onBlur={handleBlur('email')}
-                    value={values.email}
-                  />
-                </View>
-
-                {errors.email && (
-                  <Text style={styles.errorLabel}>{errors.email}</Text>
-                )}
-
-                <View style={styles.containerTextInput}>
-                  <Text style={styles.label}>Password</Text>
-                  <TextInput
-                    placeholder="Please enter the password"
-                    variant="outlined"
-                    leading={
-                      <Icon
-                        name="account-key"
-                        size={Fonts.size.md}
-                        color={Colors.primary}
-                      />
-                    }
-                    trailing={
-                      <TouchableOpacity onPress={() => setShowPass(!showPass)}>
-                        <Icon
-                          name={showPass ? 'eye-off' : 'eye'}
-                          size={Fonts.size.md}
-                          color={Colors.primary}
-                        />
-                      </TouchableOpacity>
-                    }
-                    secureTextEntry={!showPass}
-                    color={Colors.primary}
-                    inputStyle={styles.inputStyle}
-                    onChangeText={handleChange('password')}
-                    onBlur={handleBlur('password')}
-                    value={values.password}
-                  />
-                </View>
-
-                {errors.password && (
-                  <Text style={styles.errorLabel}>{errors.password}</Text>
-                )}
-
-                <Button
-                  title="Signup"
+                <TouchableOpacity
                   onPress={handleSubmit as () => void}
-                  titleStyle={styles.labelButton}
-                  color={Colors.button}
-                />
+                  style={{
+                    paddingHorizontal: 30,
+                    paddingVertical: 10,
+                    backgroundColor: '#FEB941',
+                    borderRadius: 20,
+                    alignItems: 'center',
+                  }}>
+                  <Text style={[styles.label, {color: 'white'}]}>Sign Up</Text>
+                </TouchableOpacity>
 
                 <TouchableOpacity
                   style={styles.alignSignIn}
@@ -342,7 +341,7 @@ function Page(): JSX.Element {
                         styles.label,
                         {color: Colors.primary, fontFamily: Fonts.family.bold},
                       ]}>
-                      Sign In here
+                      Login
                     </Text>
                   </Text>
                 </TouchableOpacity>
@@ -391,20 +390,20 @@ const PhoneInput: React.FC = () => {
   return (
     <>
       <View style={styles.containerTextInput}>
-        <Text style={styles.label}>Phone</Text>
-        <TextInput
-          variant="outlined"
-          leading={
-            <Icon
-              name="phone-classic"
-              size={Fonts.size.md}
-              color={Colors.primary}
-            />
-          }
-          color={Colors.primary}
-          inputStyle={styles.inputStyle}
+        <TxI
+          style={{
+            backgroundColor: 'white',
+            borderRadius: 100,
+            paddingHorizontal: 20,
+            color: 'black',
+            fontFamily: Fonts.family.regular,
+            fontSize: Fonts.size.lg,
+            borderColor: 'black',
+            borderWidth: 1,
+          }}
           keyboardType="phone-pad"
           onBlur={handleBlurs('phone')}
+          placeholderTextColor={'#b3b3b3'}
           {...maskedInputProps}
         />
       </View>
@@ -428,6 +427,7 @@ const styles = StyleSheet.create({
   containerForm: {
     flex: 1,
     gap: 20,
+    padding: 30,
     justifyContent: 'center',
   },
 
@@ -456,8 +456,8 @@ const styles = StyleSheet.create({
   titleLogin: {
     color: Colors.text,
     fontFamily: Fonts.family.bold,
-    fontSize: Fonts.size.lg,
-    textAlign: 'center',
+    fontSize: h(20),
+    textAlign: 'left',
   },
 
   alignSignIn: {alignSelf: 'center'},

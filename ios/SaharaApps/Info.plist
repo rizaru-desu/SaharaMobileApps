@@ -49,9 +49,9 @@
 	<false/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>CN-Bold.ttf</string>
-		<string>CN-Italic.ttf</string>
-		<string>CN-Regular.ttf</string>
+		<string>Roboto-Bold.ttf</string>
+		<string>Roboto-Italic.ttf</string>
+		<string>Roboto-Regular.ttf</string>
 	</array>
 </dict>
 </plist>

@@ -1,11 +1,11 @@
-import {verticalScale as h} from 'react-native-size-matters';
+import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
-const baseFontSize = h(14);
+const baseFontSize = hp(1.5);
 export const Fonts = {
   family: {
-    regular: 'CN-Regular',
-    italic: 'CN-Italic',
-    bold: 'CN-Bold',
+    regular: 'Roboto-Regular',
+    italic: 'Roboto-Italic',
+    bold: 'Roboto-Bold',
   },
   size: {
     xs: baseFontSize * 0.5,
@@ -24,6 +24,10 @@ export const Colors = {
 };
 
 export const Images = {
+  logoN: require('./images/logo.png'),
+  logoNW: require('./images/logo-white.png'),
+  logoTop: require('./images/top-loggo.png'),
+  logoBG: require('./images/bg-s.png'),
   logoMan: require('./images/loginMan.png'),
   logoLogin: require('./images/loginHeader.png'),
   logoSignUp: require('./images/signup.png'),

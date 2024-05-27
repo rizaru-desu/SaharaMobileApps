@@ -10,7 +10,7 @@ import {AlertBase} from './src/component/alert.component';
 import {LoadingBase} from './src/component/loading.component';
 
 function App(): JSX.Element {
-  React.useEffect(() => {
+  /* React.useEffect(() => {
     const backAction = () => {
       return true;
     };
@@ -23,7 +23,7 @@ function App(): JSX.Element {
     return () => {
       backHandler.remove();
     };
-  }, []);
+  }, []); */
 
   return (
     <ErrorBoundary>

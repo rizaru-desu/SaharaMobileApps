@@ -1,6 +1,7 @@
 import React from 'react';
 import {
-  SafeAreaView,
+  ImageBackground,
+  TextInput as TxI,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -9,8 +10,6 @@ import {
 import {Colors, Fonts, Images} from '../assets/assets';
 import {verticalScale as h} from 'react-native-size-matters';
 import {Formik} from 'formik';
-import {Button, TextInput} from '@react-native-material/core';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Alert} from '../component/alert.component';
 import {LOGIN_API, SaharaClient} from '../config/apis';
 import {Loading} from '../component/loading.component';
@@ -20,6 +19,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FastImage from 'react-native-fast-image';
 import NetInfo from '@react-native-community/netinfo';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import DropShadow from 'react-native-drop-shadow';
 
 function Page(): JSX.Element {
   const [showPass, setShowPass] = React.useState<boolean>(false);
@@ -88,129 +88,164 @@ function Page(): JSX.Element {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <ImageBackground
+      source={Images.logoBG}
+      resizeMode="stretch"
+      style={styles.container}>
       <View style={styles.containerImage}>
-        <FastImage
-          style={{width: h(100), height: h(100)}}
-          source={Images.logoSahara}
-          resizeMode={FastImage.resizeMode.contain}
-        />
-
-        <FastImage
-          style={{width: h(125), height: h(125)}}
-          source={Images.logoLogin}
-          resizeMode={FastImage.resizeMode.contain}
-        />
+        <DropShadow
+          style={{
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 2,
+              height: 2,
+            },
+            shadowOpacity: 1,
+            shadowRadius: 1,
+          }}>
+          <FastImage
+            style={{width: h(100), height: h(100)}}
+            source={Images.logoN}
+            resizeMode={FastImage.resizeMode.contain}
+          />
+        </DropShadow>
       </View>
 
       <View style={styles.containerForm}>
-        <Text style={styles.titleLogin}>Log In to you Account</Text>
         <Formik
           validationSchema={formSchema}
           initialValues={{email: '', password: ''}}
           onSubmit={values => loginUser({values})}>
           {({handleChange, handleBlur, handleSubmit, errors, values}) => (
-            <KeyboardAwareScrollView
-              enableAutomaticScroll
-              showsVerticalScrollIndicator={false}>
-              <View style={styles.containerTextInput}>
+            <DropShadow
+              style={{
+                shadowColor: '#fff',
+                shadowOffset: {
+                  width: 0,
+                  height: 0,
+                },
+                shadowOpacity: 1,
+                shadowRadius: 2,
+              }}>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  paddingVertical: 50,
+                  paddingHorizontal: 10,
+                  borderWidth: 2,
+                  borderRadius: 30,
+                  borderColor: 'white',
+                  backgroundColor: '#fffffb4D',
+                }}>
                 <View style={styles.containerTextInput}>
-                  <Text style={styles.label}>Email</Text>
-                  <TextInput
-                    placeholder="Please enter the email address"
-                    variant="outlined"
-                    leading={
-                      <Icon
-                        name="email"
-                        size={Fonts.size.md}
-                        color={Colors.primary}
-                      />
-                    }
-                    color={Colors.primary}
-                    inputStyle={styles.inputStyle}
-                    onChangeText={handleChange('email')}
-                    keyboardType="email-address"
-                    onBlur={handleBlur('email')}
-                    value={values.email}
-                  />
-                </View>
+                  <View style={styles.containerTextInput}>
+                    <TxI
+                      style={{
+                        backgroundColor: 'white',
+                        borderRadius: 100,
+                        paddingHorizontal: 20,
+                        color: 'black',
+                        fontFamily: Fonts.family.regular,
+                        fontSize: Fonts.size.lg,
+                      }}
+                      placeholder="Email"
+                      onChangeText={handleChange('email')}
+                      keyboardType="email-address"
+                      onBlur={handleBlur('email')}
+                      value={values.email}
+                      placeholderTextColor={'#b3b3b3'}
+                    />
+                  </View>
 
-                {errors.email && (
-                  <Text style={styles.errorLabel}>{errors.email}</Text>
-                )}
+                  {errors.email && (
+                    <Text style={styles.errorLabel}>{errors.email}</Text>
+                  )}
 
-                <View style={styles.containerTextInput}>
-                  <Text style={styles.label}>Password</Text>
-                  <TextInput
-                    placeholder="Please enter the password"
-                    variant="outlined"
-                    leading={
-                      <Icon
-                        name="account-key"
-                        size={Fonts.size.md}
-                        color={Colors.primary}
+                  <View style={styles.containerTextInput}>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        backgroundColor: 'white',
+                        borderRadius: 100,
+                        paddingHorizontal: 20,
+                        alignItems: 'center',
+                      }}>
+                      <TxI
+                        style={{
+                          width: '95%',
+                          color: 'black',
+                          fontFamily: Fonts.family.regular,
+                          fontSize: Fonts.size.lg,
+                        }}
+                        placeholder="Password"
+                        onChangeText={handleChange('password')}
+                        onBlur={handleBlur('password')}
+                        value={values.password}
+                        secureTextEntry={!showPass}
+                        autoCapitalize="none"
+                        keyboardType="default"
+                        placeholderTextColor={'#b3b3b3'}
                       />
-                    }
-                    trailing={
                       <TouchableOpacity onPress={() => setShowPass(!showPass)}>
                         <Icon
                           name={showPass ? 'eye-off' : 'eye'}
-                          size={Fonts.size.md}
+                          size={Fonts.size.xl}
                           color={Colors.primary}
                         />
                       </TouchableOpacity>
-                    }
-                    secureTextEntry={!showPass}
-                    color={Colors.primary}
-                    inputStyle={styles.inputStyle}
-                    onChangeText={handleChange('password')}
-                    onBlur={handleBlur('password')}
-                    value={values.password}
-                  />
-                </View>
+                    </View>
+                  </View>
 
-                {errors.password && (
-                  <Text style={styles.errorLabel}>{errors.password}</Text>
-                )}
+                  {errors.password && (
+                    <Text style={styles.errorLabel}>{errors.password}</Text>
+                  )}
 
-                <View style={styles.alignForgot}>
+                  <View style={styles.alignForgot}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        navigate({route: 'InitForgotPassPages'});
+                      }}>
+                      <Text style={styles.label}>Forgot Password?</Text>
+                    </TouchableOpacity>
+                  </View>
+
+                  <TouchableOpacity
+                    onPress={handleSubmit as () => void}
+                    style={{
+                      paddingHorizontal: 30,
+                      paddingVertical: 10,
+                      backgroundColor: '#FF6500',
+                      borderRadius: 20,
+                      alignSelf: 'center',
+                    }}>
+                    <Text style={[styles.label, {color: 'white'}]}>Login</Text>
+                  </TouchableOpacity>
+
+                  <View style={styles.alignSignUp}>
+                    <Text style={styles.label}>don't have an Account?</Text>
+                  </View>
                   <TouchableOpacity
                     onPress={() => {
-                      navigate({route: 'InitForgotPassPages'});
+                      replace({route: 'InitSignUpPages'});
+                    }}
+                    style={{
+                      paddingHorizontal: 30,
+                      paddingVertical: 10,
+                      backgroundColor: '#FEB941',
+                      borderRadius: 20,
+                      alignItems: 'center',
                     }}>
-                    <Text style={styles.label}>Forgot Password?</Text>
+                    <Text style={[styles.label, {color: 'white'}]}>
+                      Create Account
+                    </Text>
                   </TouchableOpacity>
                 </View>
-
-                <Button
-                  title="Login"
-                  onPress={handleSubmit as () => void}
-                  titleStyle={styles.labelButton}
-                  color={Colors.button}
-                />
-
-                <TouchableOpacity
-                  style={styles.alignSignUp}
-                  onPress={() => {
-                    replace({route: 'InitSignUpPages'});
-                  }}>
-                  <Text style={styles.label}>
-                    Don't have an Account?{' '}
-                    <Text
-                      style={[
-                        styles.label,
-                        {color: Colors.primary, fontFamily: Fonts.family.bold},
-                      ]}>
-                      SignUp
-                    </Text>
-                  </Text>
-                </TouchableOpacity>
               </View>
-            </KeyboardAwareScrollView>
+            </DropShadow>
           )}
         </Formik>
       </View>
-    </SafeAreaView>
+    </ImageBackground>
   );
 }
 
@@ -228,7 +263,6 @@ const styles = StyleSheet.create({
 
   containerForm: {
     flex: 1,
-    gap: 20,
     justifyContent: 'center',
   },
 

@@ -39,6 +39,7 @@ const ListDR: React.FC<{
     return (
       <React.Fragment>
         <View style={styles.containerTextInput}>
+          <Text style={styles.labelTitle}>Delivery Order</Text>
           <TextInput
             placeholder="Please enter No Surat"
             variant="standard"
@@ -50,7 +51,7 @@ const ListDR: React.FC<{
                 icon={
                   <Icon
                     name={'archive-search'}
-                    size={Fonts.size.sm}
+                    size={h(18)}
                     color={Colors.primary}
                   />
                 }
@@ -66,9 +67,8 @@ const ListDR: React.FC<{
           />
         </View>
 
-        <Text style={styles.labelTitle}>Delivery Order</Text>
-
         <FlatList
+          showsVerticalScrollIndicator={false}
           data={listDR}
           refreshControl={
             <RefreshControl
@@ -191,7 +191,9 @@ const ListDR: React.FC<{
                   <View style={styles.containerFlex}>
                     <View style={styles.containerLog}>
                       <Text style={styles.labelItem}>Recaive Date:</Text>
-                      <Text style={styles.labelItem}>{item.recaiveDate}</Text>
+                      <Text style={styles.labelItem}>
+                        {moment(item.recaiveDate).format('DD/MM/YYYY HH:mm')}
+                      </Text>
                     </View>
 
                     <View style={styles.containerLog}>

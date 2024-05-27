@@ -64,7 +64,7 @@ const FirstRoute: React.FC = () => {
               gap: 10,
               padding: 5,
               borderWidth: 2,
-              borderColor: Colors.primary,
+              borderColor: '#FF9D59',
               marginVertical: 10,
             }}>
             <FastImage
@@ -154,7 +154,7 @@ const SecondRoute: React.FC = () => {
               gap: 10,
               padding: 5,
               borderWidth: 2,
-              borderColor: Colors.primary,
+              borderColor: '#FF9D59',
               marginVertical: 10,
             }}>
             <View

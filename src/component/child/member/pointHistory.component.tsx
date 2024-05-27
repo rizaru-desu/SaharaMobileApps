@@ -14,83 +14,71 @@ const PointHistory: React.FC<{
   if (previlege === 1 || previlege === 2) {
     return (
       <React.Fragment>
-        <Text style={styles.labelTitle}>History Point</Text>
-        <DropShadow style={styles.dropShadow}>
-          <ScrollView
-            nestedScrollEnabled
-            showsVerticalScrollIndicator={false}
-            style={[styles.containerBorder, {maxHeight: h(250)}]}>
-            {!_.isEmpty(historyPoint) ? (
-              _.map(historyPoint, (item: any, index: number) => (
-                <View
-                  key={index}
-                  style={[
-                    styles.containerList,
-                    {
-                      alignItems: 'flex-start',
-                      borderBottomColor: Colors.primary,
-                      borderBottomWidth: 3,
-                      borderStyle: 'dotted',
-                    },
-                  ]}>
-                  <View style={styles.containerFlexIcon}>
-                    <View style={styles.containerRowIconMember}>
-                      <Icon
-                        name="qrcode-scan"
-                        size={h(15)}
-                        color={Colors.text}
-                      />
-                      <Text style={styles.labelNameIcon}>
-                        {_.isEmpty(item.scanDate)
-                          ? ' - '
-                          : moment().format('DD/MM/YYYY HH:mm')}
-                      </Text>
-                    </View>
-                    <View style={styles.containerRowIconMember}>
-                      <Icon
-                        name="inbox-multiple"
-                        size={h(15)}
-                        color={Colors.text}
-                      />
-                      <Text style={styles.labelNameIcon}>
-                        {item.productName}
-                      </Text>
-                    </View>
-                    <View style={styles.containerRowIconMember}>
-                      <Icon
-                        name="link-box-variant"
-                        size={h(15)}
-                        color={Colors.text}
-                      />
-                      <Text style={styles.labelNameIcon}>
-                        {item.labelProducts}
-                      </Text>
-                    </View>
-                    <View style={styles.containerRowIconMember}>
-                      <Icon
-                        name="note-alert"
-                        size={h(15)}
-                        color={Colors.text}
-                      />
-                      <Text style={styles.labelNameIcon}>{item.remark}</Text>
-                    </View>
+        <ScrollView
+          nestedScrollEnabled
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{padding: 5}}
+          style={[styles.containerBorder, {maxHeight: h(250)}]}>
+          {!_.isEmpty(historyPoint) ? (
+            _.map(historyPoint, (item: any, index: number) => (
+              <View
+                key={index}
+                style={[
+                  styles.containerList,
+                  {
+                    alignItems: 'flex-start',
+                    borderBottomColor: Colors.primary,
+                    borderBottomWidth: 3,
+                    borderStyle: 'dotted',
+                  },
+                ]}>
+                <View style={styles.containerFlexIcon}>
+                  <View style={styles.containerRowIconMember}>
+                    <Icon name="qrcode-scan" size={h(15)} color={Colors.text} />
+                    <Text style={styles.labelNameIcon}>
+                      {_.isEmpty(item.scanDate)
+                        ? ' - '
+                        : moment().format('DD/MM/YYYY HH:mm')}
+                    </Text>
                   </View>
-
-                  <View style={styles.containerFlexIcon}>
-                    <View style={styles.containerRowIconMember}>
-                      <Icon name="hand-coin" size={h(15)} color={Colors.text} />
-                      <Text style={styles.labelNameIcon}>
-                        Point: {item.loyaltyPoint}
-                      </Text>
-                    </View>
+                  <View style={styles.containerRowIconMember}>
+                    <Icon
+                      name="inbox-multiple"
+                      size={h(15)}
+                      color={Colors.text}
+                    />
+                    <Text style={styles.labelNameIcon}>{item.productName}</Text>
+                  </View>
+                  <View style={styles.containerRowIconMember}>
+                    <Icon
+                      name="link-box-variant"
+                      size={h(15)}
+                      color={Colors.text}
+                    />
+                    <Text style={styles.labelNameIcon}>
+                      {item.labelProducts}
+                    </Text>
+                  </View>
+                  <View style={styles.containerRowIconMember}>
+                    <Icon name="note-alert" size={h(15)} color={Colors.text} />
+                    <Text style={styles.labelNameIcon}>{item.remark}</Text>
                   </View>
                 </View>
-              ))
-            ) : (
-              <Text style={styles.labelEmpty}>Empty history point</Text>
-            )}
-          </ScrollView>
-        </DropShadow>
+
+                <View style={styles.containerFlexIcon}>
+                  <View style={styles.containerRowIconMember}>
+                    <Icon name="hand-coin" size={h(15)} color={Colors.text} />
+                    <Text style={styles.labelNameIcon}>
+                      Point: {item.loyaltyPoint}
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            ))
+          ) : (
+            <Text style={styles.labelEmpty}>Empty history point</Text>
+          )}
+        </ScrollView>
       </React.Fragment>
     );
   } else {
@@ -104,7 +92,7 @@ const styles = StyleSheet.create({
   containerBorder: {
     borderWidth: 2,
     backgroundColor: 'white',
-    borderColor: Colors.primary,
+    borderColor: '#FF9D59',
     borderRadius: 10,
     gap: 10,
   },

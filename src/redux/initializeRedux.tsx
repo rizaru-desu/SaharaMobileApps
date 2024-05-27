@@ -254,7 +254,22 @@ export const getDahsboardMember = async ({
           dispatch(
             setDetailOwner({addDetailOwner: result?.dataOwner ? false : true}),
           );
-          dispatch(setDataDashboardMember({dataDashboardMember: result}));
+
+          const finalResult = {
+            campaign: _.get(result, 'campaign', []),
+            historyPoint: {
+              title: 'Point History',
+              data: _.get(result, 'historyPoint', []),
+            },
+            listMember: {
+              title: 'Booth Member List',
+              data: _.get(result, 'listMember', []),
+            },
+            currentPoint: result.currentPoint,
+            dataOwner: result?.dataOwner,
+          };
+
+          dispatch(setDataDashboardMember({dataDashboardMember: finalResult}));
           dispatch(
             setShowCampaign({
               showCampaign: !_.isEmpty(result?.campaign) ? true : false,

@@ -17,78 +17,72 @@ const ListMemberOwner: React.FC<{
   if (previlege === 1) {
     return (
       <React.Fragment>
-        <DropShadow style={styles.dropShadow}>
-          <View style={styles.containerBorder}>
-            <Button
-              tintColor="white"
-              style={{alignSelf: 'flex-end'}}
-              color={Colors.button}
-              titleStyle={styles.labelButton}
-              compact
-              title="Add Member"
-              trailing={
-                <Icon name="account-plus" size={h(15)} color={'white'} />
-              }
-              onPress={() => {
-                navigate({
-                  route: 'InitAddBooth',
-                  params: {boothOwnerId: dataOwner?.dataOwner?.boothOwnerId},
-                });
-              }}
-            />
-            <Text style={styles.labelTitle}>List Booth Member</Text>
-            <ScrollView nestedScrollEnabled style={{maxHeight: h(250)}}>
-              {!_.isEmpty(listMember) ? (
-                _.map(listMember, (item: any, index: number) => (
-                  <View key={index} style={styles.containerList}>
-                    <FastImage
-                      style={{width: h(100), height: h(100)}}
-                      source={{uri: item.photoBooth}}
-                      resizeMode={FastImage.resizeMode.contain}
-                    />
+        <View style={styles.containerBorder}>
+          <Button
+            tintColor="white"
+            style={{alignSelf: 'flex-end'}}
+            color={Colors.button}
+            titleStyle={styles.labelButton}
+            compact
+            title="Add Member"
+            trailing={<Icon name="account-plus" size={h(15)} color={'white'} />}
+            onPress={() => {
+              navigate({
+                route: 'InitAddBooth',
+                params: {boothOwnerId: dataOwner?.dataOwner?.boothOwnerId},
+              });
+            }}
+          />
 
-                    <View style={styles.containerFlexIcon}>
-                      <View style={styles.containerRowIconMember}>
-                        <Icon
-                          name="card-account-details-star"
-                          size={h(15)}
-                          color={Colors.text}
-                        />
-                        <Text style={styles.labelNameIcon}>
-                          {item.fullname}
-                        </Text>
-                      </View>
-                      <View style={styles.containerRowIconMember}>
-                        <Icon
-                          name="phone-classic"
-                          size={h(15)}
-                          color={Colors.text}
-                        />
-                        <Text style={styles.labelNameIcon}>{item.phone}</Text>
-                      </View>
-                      <View style={styles.containerRowIconMember}>
-                        <Icon name="email" size={h(15)} color={Colors.text} />
-                        <Text style={styles.labelNameIcon}>{item.email}</Text>
-                      </View>
-                      <View style={styles.containerRowIconMember}>
-                        <Icon
-                          name="google-maps"
-                          size={h(15)}
-                          color={Colors.text}
-                        />
-                        <Text style={styles.labelNameIcon}>
-                          {item.alamatBooth}
-                        </Text>
-                      </View>
+          <ScrollView nestedScrollEnabled style={{maxHeight: h(250)}}>
+            {!_.isEmpty(listMember) ? (
+              _.map(listMember, (item: any, index: number) => (
+                <View key={index} style={styles.containerList}>
+                  <FastImage
+                    style={{width: h(100), height: h(100)}}
+                    source={{uri: item.photoBooth}}
+                    resizeMode={FastImage.resizeMode.contain}
+                  />
+
+                  <View style={styles.containerFlexIcon}>
+                    <View style={styles.containerRowIconMember}>
+                      <Icon
+                        name="card-account-details-star"
+                        size={h(15)}
+                        color={Colors.text}
+                      />
+                      <Text style={styles.labelNameIcon}>{item.fullname}</Text>
+                    </View>
+                    <View style={styles.containerRowIconMember}>
+                      <Icon
+                        name="phone-classic"
+                        size={h(15)}
+                        color={Colors.text}
+                      />
+                      <Text style={styles.labelNameIcon}>{item.phone}</Text>
+                    </View>
+                    <View style={styles.containerRowIconMember}>
+                      <Icon name="email" size={h(15)} color={Colors.text} />
+                      <Text style={styles.labelNameIcon}>{item.email}</Text>
+                    </View>
+                    <View style={styles.containerRowIconMember}>
+                      <Icon
+                        name="google-maps"
+                        size={h(15)}
+                        color={Colors.text}
+                      />
+                      <Text style={styles.labelNameIcon}>
+                        {item.alamatBooth}
+                      </Text>
                     </View>
                   </View>
-                ))
-              ) : (
-                <Text style={styles.labelEmpty}>Empty Member Booth</Text>
-              )}
-            </ScrollView>
-          </View>
-        </DropShadow>
+                </View>
+              ))
+            ) : (
+              <Text style={styles.labelEmpty}>Empty Member Booth</Text>
+            )}
+          </ScrollView>
+        </View>
       </React.Fragment>
     );
   } else {
@@ -100,11 +94,10 @@ export default ListMemberOwner;
 
 const styles = StyleSheet.create({
   containerBorder: {
-    margin: 10,
     padding: 10,
     borderWidth: 2,
     backgroundColor: 'white',
-    borderColor: Colors.primary,
+    borderColor: '#FF9D59',
     borderRadius: 10,
     gap: 10,
   },
@@ -114,6 +107,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 10,
     alignItems: 'center',
+    borderBottomWidth: 3,
+    borderColor: Colors.primary,
+    borderStyle: 'dotted',
   },
   containerFlexIcon: {flex: 1, gap: 10},
   labelEmpty: {

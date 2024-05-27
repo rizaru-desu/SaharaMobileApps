@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
-import {verticalScale as h, scale as w} from 'react-native-size-matters';
+import {scale as w} from 'react-native-size-matters';
 import Modal from 'react-native-modal';
 import {Colors, Fonts} from '../assets/assets';
 import Icon from 'react-native-vector-icons/FontAwesome';

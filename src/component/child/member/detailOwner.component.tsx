@@ -1,10 +1,10 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {Colors, Fonts} from '../../../assets/assets';
-import {IconButton} from '@react-native-material/core';
 import {verticalScale as h} from 'react-native-size-matters';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import IconAwesome from 'react-native-vector-icons/FontAwesome5';
 import DropShadow from 'react-native-drop-shadow';
+import _ from 'lodash';
 
 const DetailOwner: React.FC<{
   previlege?: number;
@@ -13,45 +13,81 @@ const DetailOwner: React.FC<{
   if (previlege === 1) {
     return (
       <React.Fragment>
-        <DropShadow style={styles.dropShadow}>
-          <View style={styles.containerBorder}>
-            <Text style={styles.labelTitle}>Owner Detail</Text>
-            <View style={styles.containerRowIconMember}>
-              <Icon name="clipboard-list" size={h(15)} color={Colors.text} />
-              <Text style={styles.labelNameIcon}>
-                Total Booth: {dataOwner?.dataOwner?.totalBooth || 0}
+        <View style={styles.containerBorder}>
+          <View style={styles.containerRowIconMember}>
+            <IconAwesome name="box" size={h(15)} color={'red'} />
+            <View style={{flex: 1, flexDirection: 'row'}}>
+              <Text
+                style={{
+                  width: '25%',
+                  fontFamily: Fonts.family.regular,
+                  fontSize: Fonts.size.md,
+                  color: Colors.text,
+                }}>
+                Total Booth
               </Text>
-            </View>
-            <View style={styles.containerRowIconMember}>
-              <Icon name="calendar-account" size={h(15)} color={Colors.text} />
               <Text style={styles.labelNameIcon}>
-                Berdisi Sejak {dataOwner?.dataOwner?.dateEstablishment}
+                : {_.size(dataOwner?.listMember?.data) || 0}
               </Text>
-            </View>
-            <View style={styles.containerRowIconMember}>
-              <Icon name="google-maps" size={h(15)} color={Colors.text} />
-              <Text style={styles.labelNameIcon}>
-                {dataOwner?.dataOwner?.alamatOwner}
-              </Text>
-            </View>
-
-            <View style={styles.containerSocial}>
-              <IconButton
-                icon={<Icon name="facebook" size={h(25)} color={Colors.text} />}
-              />
-
-              <IconButton
-                icon={
-                  <Icon name="instagram" size={h(25)} color={Colors.text} />
-                }
-              />
-
-              <IconButton
-                icon={<Icon name="shopping" size={h(25)} color={Colors.text} />}
-              />
             </View>
           </View>
-        </DropShadow>
+          <View style={styles.containerRowIconMember}>
+            <IconAwesome name="clock" size={h(15)} color={'red'} />
+            <View style={{flex: 1, flexDirection: 'row'}}>
+              <Text
+                style={{
+                  width: '25%',
+                  fontFamily: Fonts.family.regular,
+                  fontSize: Fonts.size.md,
+                  color: Colors.text,
+                }}>
+                Since
+              </Text>
+              <Text style={styles.labelNameIcon}>
+                : {dataOwner?.dataOwner?.dateEstablishment}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.containerRowIconMember}>
+            <IconAwesome name="map-marker-alt" size={h(15)} color={'red'} />
+
+            <View style={{flex: 1, flexDirection: 'row'}}>
+              <Text
+                style={{
+                  width: '25%',
+                  fontFamily: Fonts.family.regular,
+                  fontSize: Fonts.size.md,
+                  color: Colors.text,
+                }}>
+                Address
+              </Text>
+              <Text style={styles.labelNameIcon}>
+                : {dataOwner?.dataOwner?.alamatOwner}
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.containerRowIconMember}>
+            <IconAwesome name="facebook" size={h(15)} color={'red'} />
+            <Text style={styles.labelNameIcon}>
+              {dataOwner?.dataOwner?.facebook}
+            </Text>
+          </View>
+
+          <View style={styles.containerRowIconMember}>
+            <IconAwesome name="instagram" size={h(15)} color={'red'} />
+            <Text style={styles.labelNameIcon}>
+              {dataOwner?.dataOwner?.instagram}
+            </Text>
+          </View>
+
+          <View style={styles.containerRowIconMember}>
+            <IconAwesome name="shopping-bag" size={h(15)} color={'red'} />
+            <Text style={styles.labelNameIcon}>
+              {dataOwner?.dataOwner?.ecommerce}
+            </Text>
+          </View>
+        </View>
       </React.Fragment>
     );
   } else {
@@ -63,11 +99,10 @@ export default DetailOwner;
 
 const styles = StyleSheet.create({
   containerBorder: {
-    margin: 10,
     padding: 10,
     borderWidth: 2,
     backgroundColor: 'white',
-    borderColor: Colors.primary,
+    borderColor: 'silver',
     borderRadius: 10,
     gap: 10,
   },

@@ -4,6 +4,7 @@ import DropShadow from 'react-native-drop-shadow';
 import {IconButton} from '@react-native-material/core';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Fonts} from '../assets/assets';
+import {verticalScale as h} from 'react-native-size-matters';
 
 const Header: React.FC<{
   title?: string;
@@ -14,13 +15,7 @@ const Header: React.FC<{
       <View style={styles.containerHeader}>
         <IconButton
           onPress={onBack}
-          icon={
-            <Icon
-              name="arrow-left-circle"
-              size={Fonts.size.xl}
-              color={'white'}
-            />
-          }
+          icon={<Icon name="arrow-left-circle" size={h(25)} color={'white'} />}
         />
 
         <Text style={styles.labelTitle}>{title}</Text>
@@ -36,7 +31,6 @@ const styles = StyleSheet.create({
   containerHeader: {
     backgroundColor: '#FF9D59',
     borderRadius: 25,
-    padding: 10,
     flexDirection: 'row',
     gap: 10,
     alignItems: 'center',
@@ -45,7 +39,7 @@ const styles = StyleSheet.create({
   /** LABEL */
   labelTitle: {
     fontFamily: Fonts.family.bold,
-    fontSize: Fonts.size.md,
+    fontSize: h(18),
     color: 'white',
   },
 

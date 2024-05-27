@@ -1,13 +1,13 @@
 import React from 'react';
 import {
   StyleSheet,
-  SafeAreaView,
+  TextInput as TxI,
   View,
   Text,
   TouchableOpacity,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
-import {NavigationProp, RouteProp} from '@react-navigation/native';
+import {NavigationProp} from '@react-navigation/native';
 import {useAppSelector} from '../config/useRedux';
 import {goBack, replace} from '../config/refNavigation';
 import {verticalScale as h} from 'react-native-size-matters';
@@ -15,21 +15,21 @@ import {Formik} from 'formik';
 import {Loading} from '../component/loading.component';
 import {SaharaClient, getToken, notAuth} from '../config/apis';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {Avatar, Button, TextInput} from '@react-native-material/core';
-import {Colors, Fonts} from '../assets/assets';
+import {Avatar} from '@react-native-material/core';
+import {Colors, Fonts, Images} from '../assets/assets';
 import {CHANGE_PASS_API} from '../config/apis';
 import {Alert} from '../component/alert.component';
 import * as yup from 'yup';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import NetInfo from '@react-native-community/netinfo';
-import Header from '../component/header.component';
+import LinearGradient from 'react-native-linear-gradient';
+import FastImage from 'react-native-fast-image';
 
 interface PageProps {
-  route: RouteProp<any>;
   navigation: NavigationProp<any>;
 }
 
-function Page({route, navigation}: PageProps): JSX.Element {
+function Page({navigation}: PageProps): JSX.Element {
   const dispatch = useDispatch();
   const [showPass, setShowPass] = React.useState<boolean>(false);
 
@@ -132,38 +132,78 @@ function Page({route, navigation}: PageProps): JSX.Element {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Header onBack={() => goBack()} title={route.params?.title} />
-      <KeyboardAwareScrollView
-        enableAutomaticScroll
-        showsVerticalScrollIndicator={false}>
-        <View style={styles.containerHeader}>
+    <LinearGradient colors={['#F4901E', '#F4901E']} style={styles.container}>
+      <FastImage
+        style={styles.containerImage}
+        source={Images.logoNW}
+        resizeMode={FastImage.resizeMode.stretch}
+      />
+
+      <View style={styles.containerDashboard}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
+          <TouchableOpacity
+            onPress={() => {
+              goBack();
+            }}>
+            <Icon
+              name="arrow-left-circle-outline"
+              size={25}
+              color={'#F4901E'}
+            />
+          </TouchableOpacity>
+        </View>
+
+        <View
+          style={{
+            flexDirection: 'row',
+            gap: 20,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
           <Avatar
             label={detailUser?.fullname}
-            size={h(100)}
-            style={{alignSelf: 'center'}}
+            size={h(80)}
+            color="white"
+            style={{backgroundColor: '#e5e5e5'}}
+            labelStyle={{
+              color: Colors.text,
+              fontFamily: Fonts.family.bold,
+              fontSize: h(30),
+            }}
           />
 
-          <View style={styles.containerIcon}>
-            <Icon name="account-tie-hat" size={h(15)} color={Colors.text} />
-            <Text style={styles.labelItem}>{detailUser?.fullname}</Text>
-          </View>
+          <View>
+            <View style={styles.containerIcon}>
+              <Icon name="account-tie-hat" size={h(15)} color={Colors.text} />
+              <Text style={styles.labelItem}>{detailUser?.fullname}</Text>
+            </View>
 
-          <View style={styles.containerIcon}>
-            <Icon name="phone-classic" size={h(15)} color={Colors.text} />
-            <Text style={styles.labelItem}>{detailUser?.phone}</Text>
-          </View>
+            <View style={styles.containerIcon}>
+              <Icon name="phone-classic" size={h(15)} color={Colors.text} />
+              <Text style={styles.labelItem}>{detailUser?.phone}</Text>
+            </View>
 
-          <View style={styles.containerIcon}>
-            <Icon name="calendar" size={h(15)} color={Colors.text} />
-            <Text style={styles.labelItem}>{detailUser?.dateOfBirth}</Text>
-          </View>
+            <View style={styles.containerIcon}>
+              <Icon name="calendar" size={h(15)} color={Colors.text} />
+              <Text style={styles.labelItem}>{detailUser?.dateOfBirth}</Text>
+            </View>
 
-          <View style={styles.containerIcon}>
-            <Icon name="email" size={h(15)} color={Colors.text} />
-            <Text style={styles.labelItem}>{detailUser?.email}</Text>
+            <View style={styles.containerIcon}>
+              <Icon name="email" size={h(15)} color={Colors.text} />
+              <Text style={styles.labelItem}>{detailUser?.email}</Text>
+            </View>
           </View>
+        </View>
 
+        <KeyboardAwareScrollView
+          enableAutomaticScroll
+          showsVerticalScrollIndicator={false}
+          style={{marginTop: 20}}>
           <Formik
             validationSchema={formSchema}
             initialValues={{password: '', confirmPassword: ''}}
@@ -171,33 +211,40 @@ function Page({route, navigation}: PageProps): JSX.Element {
             {({handleChange, handleBlur, handleSubmit, errors, values}) => (
               <View style={styles.containerTextInput}>
                 <View style={styles.containerTextInput}>
-                  <Text style={styles.label}>New Password</Text>
-                  <TextInput
-                    placeholder="Please enter the password"
-                    variant="outlined"
-                    leading={
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      backgroundColor: 'white',
+                      borderRadius: 100,
+                      paddingHorizontal: 20,
+                      borderColor: 'black',
+                      borderWidth: 1,
+                      alignItems: 'center',
+                    }}>
+                    <TxI
+                      style={{
+                        width: '95%',
+                        color: 'black',
+                        fontFamily: Fonts.family.regular,
+                        fontSize: Fonts.size.lg,
+                      }}
+                      placeholder="Password"
+                      onChangeText={handleChange('password')}
+                      onBlur={handleBlur('password')}
+                      value={values.password}
+                      secureTextEntry={!showPass}
+                      autoCapitalize="none"
+                      keyboardType="default"
+                      placeholderTextColor={'#b3b3b3'}
+                    />
+                    <TouchableOpacity onPress={() => setShowPass(!showPass)}>
                       <Icon
-                        name="account-key"
-                        size={Fonts.size.md}
+                        name={showPass ? 'eye-off' : 'eye'}
+                        size={Fonts.size.xl}
                         color={Colors.primary}
                       />
-                    }
-                    trailing={
-                      <TouchableOpacity onPress={() => setShowPass(!showPass)}>
-                        <Icon
-                          name={showPass ? 'eye-off' : 'eye'}
-                          size={Fonts.size.md}
-                          color={Colors.primary}
-                        />
-                      </TouchableOpacity>
-                    }
-                    secureTextEntry={!showPass}
-                    color={Colors.primary}
-                    inputStyle={styles.inputStyle}
-                    onChangeText={handleChange('password')}
-                    onBlur={handleBlur('password')}
-                    value={values.password}
-                  />
+                    </TouchableOpacity>
+                  </View>
                 </View>
 
                 {errors.password && (
@@ -205,33 +252,40 @@ function Page({route, navigation}: PageProps): JSX.Element {
                 )}
 
                 <View style={styles.containerTextInput}>
-                  <Text style={styles.label}>Confirm Password</Text>
-                  <TextInput
-                    placeholder="Please enter the password"
-                    variant="outlined"
-                    leading={
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      backgroundColor: 'white',
+                      borderRadius: 100,
+                      paddingHorizontal: 20,
+                      borderColor: 'black',
+                      borderWidth: 1,
+                      alignItems: 'center',
+                    }}>
+                    <TxI
+                      style={{
+                        width: '95%',
+                        color: 'black',
+                        fontFamily: Fonts.family.regular,
+                        fontSize: Fonts.size.lg,
+                      }}
+                      placeholder="Password Confirm"
+                      onChangeText={handleChange('confirmPassword')}
+                      onBlur={handleBlur('confirmPassword')}
+                      value={values.confirmPassword}
+                      secureTextEntry={!showPass}
+                      autoCapitalize="none"
+                      keyboardType="default"
+                      placeholderTextColor={'#b3b3b3'}
+                    />
+                    <TouchableOpacity onPress={() => setShowPass(!showPass)}>
                       <Icon
-                        name="account-key"
-                        size={Fonts.size.md}
+                        name={showPass ? 'eye-off' : 'eye'}
+                        size={Fonts.size.xl}
                         color={Colors.primary}
                       />
-                    }
-                    trailing={
-                      <TouchableOpacity onPress={() => setShowPass(!showPass)}>
-                        <Icon
-                          name={showPass ? 'eye-off' : 'eye'}
-                          size={Fonts.size.md}
-                          color={Colors.primary}
-                        />
-                      </TouchableOpacity>
-                    }
-                    secureTextEntry={!showPass}
-                    color={Colors.primary}
-                    inputStyle={styles.inputStyle}
-                    onChangeText={handleChange('confirmPassword')}
-                    onBlur={handleBlur('confirmPassword')}
-                    value={values.confirmPassword}
-                  />
+                    </TouchableOpacity>
+                  </View>
                 </View>
 
                 {errors.confirmPassword && (
@@ -240,34 +294,39 @@ function Page({route, navigation}: PageProps): JSX.Element {
                   </Text>
                 )}
 
-                <Button
-                  compact
-                  title="Save Password"
+                <TouchableOpacity
                   onPress={handleSubmit as () => void}
-                  titleStyle={styles.labelButton}
-                  color={Colors.button}
-                />
+                  style={{
+                    paddingHorizontal: 30,
+                    paddingVertical: 10,
+                    backgroundColor: '#FEB941',
+                    borderRadius: 20,
+                    alignItems: 'center',
+                  }}>
+                  <Text style={[styles.label, {color: 'white'}]}>
+                    Change Password
+                  </Text>
+                </TouchableOpacity>
 
-                <Button
-                  compact
-                  title="Logout"
+                <TouchableOpacity
                   onPress={() => {
                     notAuth();
                   }}
-                  titleStyle={styles.labelButton}
-                  color={Colors.button}
-                />
+                  style={{
+                    paddingHorizontal: 30,
+                    paddingVertical: 10,
+                    backgroundColor: '#FEB941',
+                    borderRadius: 20,
+                    alignItems: 'center',
+                  }}>
+                  <Text style={[styles.label, {color: 'white'}]}>Logout</Text>
+                </TouchableOpacity>
               </View>
             )}
           </Formik>
-
-          <Text style={styles.footerText}>
-            Copyright © {new Date().getFullYear()} PT.SAHARA BOGATAMA INDONESIA
-          </Text>
-          <Text style={styles.footerText}>Version 1.0.0</Text>
-        </View>
-      </KeyboardAwareScrollView>
-    </SafeAreaView>
+        </KeyboardAwareScrollView>
+      </View>
+    </LinearGradient>
   );
 }
 
@@ -277,8 +336,20 @@ const styles = StyleSheet.create({
   /** CONTAINER */
   container: {
     flex: 1,
+  },
+  containerImage: {
+    width: h(170),
+    height: h(60),
+    marginVertical: 30,
+    alignSelf: 'center',
+  },
+  containerDashboard: {
+    flex: 1,
     backgroundColor: 'white',
-    padding: 25,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    padding: 20,
+    gap: 10,
   },
   containerHeader: {
     flex: 1,
@@ -296,12 +367,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 5,
     alignItems: 'center',
-    alignSelf: 'center',
   },
 
   /** LABEL */
   label: {
-    fontSize: Fonts.size.md,
+    fontSize: Fonts.size.lg,
     fontFamily: Fonts.family.regular,
     color: Colors.text,
   },
