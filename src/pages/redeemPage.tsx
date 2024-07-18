@@ -56,7 +56,7 @@ const FirstRoute: React.FC = () => {
           />
         }
         renderItem={(
-          {item, index}, // Changed idx to index
+          {item}, // Changed idx to index
         ) => (
           <View
             style={{
@@ -107,6 +107,7 @@ const FirstRoute: React.FC = () => {
               disabled={!item.active || item.userLimit}
               compact
               title="Redeem"
+              contentContainerStyle={{height: verticalScale(48)}}
               titleStyle={styles.labelButton}
               color={Colors.button}
               onPress={() => {
@@ -146,7 +147,7 @@ const SecondRoute: React.FC = () => {
         }
         keyExtractor={(i, idx: number) => idx.toString()}
         renderItem={(
-          {item, index}, // Changed idx to index
+          {item}, // Changed idx to index
         ) => (
           <View
             style={{
@@ -212,6 +213,17 @@ const SecondRoute: React.FC = () => {
             </Text>
           </View>
         )}
+        ListEmptyComponent={
+          <Text
+            style={{
+              fontFamily: Fonts.family.bold,
+              color: Colors.text,
+              fontSize: Fonts.size.lg,
+              textAlign: 'center',
+            }}>
+            Empty data
+          </Text>
+        }
       />
     </View>
   );

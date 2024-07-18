@@ -31,6 +31,8 @@ import ListDR from '../component/child/member/listDR.component';
 import _ from 'lodash';
 import Accordion from 'react-native-collapsible/Accordion';
 import PointHistory from '../component/child/member/pointHistory.component';
+import {IconButton} from '@react-native-material/core';
+import {Loading} from '../component/loading.component';
 
 interface PageProps {
   navigation: NavigationProp<any>;
@@ -82,6 +84,7 @@ function Page({navigation}: PageProps): JSX.Element {
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
+          height: h(48),
         }}>
         <Text
           style={{
@@ -106,6 +109,7 @@ function Page({navigation}: PageProps): JSX.Element {
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
+          height: h(48),
         }}>
         <Text
           style={{
@@ -172,24 +176,29 @@ function Page({navigation}: PageProps): JSX.Element {
               </TouchableOpacity>
             )}
 
-            {previlege === 1 || previlege === 2 ? (
-              <TouchableOpacity
-                onPress={() =>
-                  navigate({
-                    route: 'InitScanQRPages',
-                    params: {createDR: false},
-                  })
-                }>
-                <IcAnt name="qrcode" size={25} color={'#F4901E'} />
-              </TouchableOpacity>
-            ) : null}
+            {detailUser?.email === 'no-reply@saharabogatama.co.id'
+              ? null
+              : previlege === 1 ||
+                (previlege === 2 && (
+                  <IconButton
+                    onPress={() => {
+                      navigate({
+                        route: 'InitScanQRPages',
+                        params: {createDR: false},
+                      });
+                    }}
+                    icon={
+                      <IcAnt name="qrcode" size={h(25)} color={'#F4901E'} />
+                    }
+                  />
+                ))}
 
-            <TouchableOpacity
+            <IconButton
               onPress={() => {
                 navigate({route: 'settingPage', params: {title: 'Setting'}});
-              }}>
-              <IcV name="gear" size={25} color={'#F4901E'} />
-            </TouchableOpacity>
+              }}
+              icon={<IcAnt name="setting" size={h(25)} color={'#F4901E'} />}
+            />
           </View>
 
           <Profiles

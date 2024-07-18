@@ -95,6 +95,7 @@ export const AlertBase = () => {
 
   return (
     <Modal
+      accessibilityLabel="Alert Modal"
       animationIn={'slideInUp'}
       animationInTiming={1000}
       animationOutTiming={1000}
@@ -105,9 +106,18 @@ export const AlertBase = () => {
       isVisible={modalVisible}>
       <View style={styles.containerContent}>
         <View style={styles.containerInfo}>
-          <Text style={styles.labelTitle}>{isTitle}</Text>
+          <Text
+            accessible={true}
+            accessibilityLabel="Title Modal"
+            style={styles.labelTitle}>
+            {isTitle}
+          </Text>
 
-          <Text numberOfLines={4} style={styles.labelSubtitle}>
+          <Text
+            accessible={true}
+            accessibilityLabel="Desc Error or Success"
+            numberOfLines={4}
+            style={styles.labelSubtitle}>
             {isDesc}
           </Text>
         </View>
@@ -170,17 +180,17 @@ const styles = StyleSheet.create({
   labelDismiss: {
     color: 'white',
     fontFamily: Fonts.family.regular,
-    fontSize: Fonts.size.sm,
+    fontSize: Fonts.size.lg,
   },
 
   buttonDismiss: {
     backgroundColor: Colors.button,
     alignSelf: 'center',
-    paddingHorizontal: 10,
-    paddingVertical: 5,
+    paddingHorizontal: 20,
+    paddingVertical: 16,
     flexDirection: 'row',
     columnGap: 5,
     alignItems: 'center',
-    borderRadius: 10,
+    borderRadius: 30,
   },
 });

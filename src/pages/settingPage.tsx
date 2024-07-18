@@ -10,12 +10,15 @@ import {useDispatch} from 'react-redux';
 import {NavigationProp} from '@react-navigation/native';
 import {useAppSelector} from '../config/useRedux';
 import {goBack, replace} from '../config/refNavigation';
-import {verticalScale as h} from 'react-native-size-matters';
+import {
+  moderateScale as h,
+  moderateVerticalScale,
+} from 'react-native-size-matters';
 import {Formik} from 'formik';
 import {Loading} from '../component/loading.component';
 import {SaharaClient, getToken, notAuth} from '../config/apis';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {Avatar} from '@react-native-material/core';
+import {Avatar, IconButton} from '@react-native-material/core';
 import {Colors, Fonts, Images} from '../assets/assets';
 import {CHANGE_PASS_API} from '../config/apis';
 import {Alert} from '../component/alert.component';
@@ -32,6 +35,7 @@ interface PageProps {
 function Page({navigation}: PageProps): JSX.Element {
   const dispatch = useDispatch();
   const [showPass, setShowPass] = React.useState<boolean>(false);
+  const [showPassConfirm, setShowPassConfirm] = React.useState<boolean>(false);
 
   const {detailUser} = useAppSelector(state => state.initInitializeRedux);
 
@@ -71,7 +75,7 @@ function Page({navigation}: PageProps): JSX.Element {
         networkConnetion.isInternetReachable
       ) {
         try {
-          Loading.show();
+          Loading.show({});
 
           const token = await getToken();
 
@@ -146,16 +150,18 @@ function Page({navigation}: PageProps): JSX.Element {
             justifyContent: 'space-between',
             alignItems: 'center',
           }}>
-          <TouchableOpacity
+          <IconButton
             onPress={() => {
               goBack();
-            }}>
-            <Icon
-              name="arrow-left-circle-outline"
-              size={25}
-              color={'#F4901E'}
-            />
-          </TouchableOpacity>
+            }}
+            icon={
+              <Icon
+                name="arrow-left-circle-outline"
+                size={h(25)}
+                color={'#F4901E'}
+              />
+            }
+          />
         </View>
 
         <View
@@ -179,22 +185,22 @@ function Page({navigation}: PageProps): JSX.Element {
 
           <View>
             <View style={styles.containerIcon}>
-              <Icon name="account-tie-hat" size={h(15)} color={Colors.text} />
+              <Icon name="account-tie-hat" size={h(17)} color={Colors.text} />
               <Text style={styles.labelItem}>{detailUser?.fullname}</Text>
             </View>
 
             <View style={styles.containerIcon}>
-              <Icon name="phone-classic" size={h(15)} color={Colors.text} />
+              <Icon name="phone-classic" size={h(17)} color={Colors.text} />
               <Text style={styles.labelItem}>{detailUser?.phone}</Text>
             </View>
 
             <View style={styles.containerIcon}>
-              <Icon name="calendar" size={h(15)} color={Colors.text} />
+              <Icon name="calendar" size={h(17)} color={Colors.text} />
               <Text style={styles.labelItem}>{detailUser?.dateOfBirth}</Text>
             </View>
 
             <View style={styles.containerIcon}>
-              <Icon name="email" size={h(15)} color={Colors.text} />
+              <Icon name="email" size={h(17)} color={Colors.text} />
               <Text style={styles.labelItem}>{detailUser?.email}</Text>
             </View>
           </View>
@@ -223,7 +229,7 @@ function Page({navigation}: PageProps): JSX.Element {
                     }}>
                     <TxI
                       style={{
-                        width: '95%',
+                        width: '87%',
                         color: 'black',
                         fontFamily: Fonts.family.regular,
                         fontSize: Fonts.size.lg,
@@ -235,12 +241,20 @@ function Page({navigation}: PageProps): JSX.Element {
                       secureTextEntry={!showPass}
                       autoCapitalize="none"
                       keyboardType="default"
-                      placeholderTextColor={'#b3b3b3'}
+                      placeholderTextColor={Colors.placeholder}
                     />
-                    <TouchableOpacity onPress={() => setShowPass(!showPass)}>
+                    <TouchableOpacity
+                      accessibilityLabel="Toggle Password Visibility"
+                      style={{
+                        height: moderateVerticalScale(48),
+                        width: moderateVerticalScale(48),
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                      onPress={() => setShowPass(!showPass)}>
                       <Icon
                         name={showPass ? 'eye-off' : 'eye'}
-                        size={Fonts.size.xl}
+                        size={moderateVerticalScale(25)}
                         color={Colors.primary}
                       />
                     </TouchableOpacity>
@@ -264,7 +278,7 @@ function Page({navigation}: PageProps): JSX.Element {
                     }}>
                     <TxI
                       style={{
-                        width: '95%',
+                        width: '87%',
                         color: 'black',
                         fontFamily: Fonts.family.regular,
                         fontSize: Fonts.size.lg,
@@ -273,15 +287,23 @@ function Page({navigation}: PageProps): JSX.Element {
                       onChangeText={handleChange('confirmPassword')}
                       onBlur={handleBlur('confirmPassword')}
                       value={values.confirmPassword}
-                      secureTextEntry={!showPass}
+                      secureTextEntry={!showPassConfirm}
                       autoCapitalize="none"
                       keyboardType="default"
-                      placeholderTextColor={'#b3b3b3'}
+                      placeholderTextColor={Colors.placeholder}
                     />
-                    <TouchableOpacity onPress={() => setShowPass(!showPass)}>
+                    <TouchableOpacity
+                      accessibilityLabel="Toggle Confirm Password Visibility"
+                      style={{
+                        height: moderateVerticalScale(48),
+                        width: moderateVerticalScale(48),
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                      onPress={() => setShowPassConfirm(!showPassConfirm)}>
                       <Icon
-                        name={showPass ? 'eye-off' : 'eye'}
-                        size={Fonts.size.xl}
+                        name={showPassConfirm ? 'eye-off' : 'eye'}
+                        size={moderateVerticalScale(25)}
                         color={Colors.primary}
                       />
                     </TouchableOpacity>
@@ -298,9 +320,9 @@ function Page({navigation}: PageProps): JSX.Element {
                   onPress={handleSubmit as () => void}
                   style={{
                     paddingHorizontal: 30,
-                    paddingVertical: 10,
+                    paddingVertical: 14,
                     backgroundColor: '#FEB941',
-                    borderRadius: 20,
+                    borderRadius: 1000,
                     alignItems: 'center',
                   }}>
                   <Text style={[styles.label, {color: 'white'}]}>
@@ -314,9 +336,9 @@ function Page({navigation}: PageProps): JSX.Element {
                   }}
                   style={{
                     paddingHorizontal: 30,
-                    paddingVertical: 10,
+                    paddingVertical: 14,
                     backgroundColor: '#FEB941',
-                    borderRadius: 20,
+                    borderRadius: 1000,
                     alignItems: 'center',
                   }}>
                   <Text style={[styles.label, {color: 'white'}]}>Logout</Text>
@@ -377,13 +399,13 @@ const styles = StyleSheet.create({
   },
   errorLabel: {
     fontSize: Fonts.size.sm,
-    color: 'red',
+    color: Colors.error,
     fontFamily: Fonts.family.bold,
   },
   labelButton: {fontFamily: Fonts.family.bold, color: 'white'},
   labelItem: {
     fontFamily: Fonts.family.regular,
-    fontSize: Fonts.size.xl,
+    fontSize: Fonts.size.md,
     color: Colors.text,
   },
   footerText: {

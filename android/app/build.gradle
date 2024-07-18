@@ -76,10 +76,10 @@ android {
 
     namespace "com.saharaapps"
     defaultConfig {
-        applicationId "id.co.saharaBogatam.loyalty"
+        applicationId "id.co.saharabogatam.loyalty"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
+        versionCode 18
         versionName "1.0.0"
     }
     signingConfigs {

@@ -2,7 +2,7 @@ import React from 'react';
 import RoutePages from './src/config/routePage';
 import ErrorBoundary from 'react-native-error-boundary';
 import {NavigationContainer} from '@react-navigation/native';
-import {BackHandler} from 'react-native';
+import {BackHandler, SafeAreaView, View} from 'react-native';
 import {Provider} from 'react-redux';
 import {store} from './src/config/store';
 import {refNavigation} from './src/config/refNavigation';

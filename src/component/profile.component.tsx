@@ -50,14 +50,7 @@ const Profiles: React.FC<{
             </Text>
           </View>
         ) : (
-          <TouchableOpacity
-            onPress={() =>
-              navigate({
-                route: 'redeemPage',
-                params: {title: 'Redeem Package'},
-              })
-            }
-            style={styles.containerWithLogo}>
+          <View style={styles.containerWithLogo}>
             <Icon name="hand-coin" size={h(18)} color={'#FF9D59'} />
             <Text
               style={{
@@ -68,7 +61,7 @@ const Profiles: React.FC<{
               }}>
               Point {point}
             </Text>
-          </TouchableOpacity>
+          </View>
         )}
       </View>
     </View>

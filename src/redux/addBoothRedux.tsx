@@ -61,7 +61,7 @@ export const getUser = async ({
 
     if (networkConnetion.isConnected && networkConnetion.isInternetReachable) {
       try {
-        Loading.show();
+        Loading.show({});
 
         const token = await getToken();
 
@@ -132,7 +132,7 @@ export const addBooth = async ({
 
     if (networkConnetion.isConnected && networkConnetion.isInternetReachable) {
       try {
-        Loading.show();
+        Loading.show({});
 
         const token = await getToken();
         const fullname = await getFullname();

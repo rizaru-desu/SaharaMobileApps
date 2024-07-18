@@ -85,7 +85,7 @@ function Page(): JSX.Element {
 
     if (networkConnetion.isConnected && networkConnetion.isInternetReachable) {
       try {
-        Loading.show();
+        Loading.show({});
         const client = await SaharaClient.post(SIGNUP_API, {
           email: values.email,
           fullname: values.fullname,
@@ -182,7 +182,7 @@ function Page(): JSX.Element {
                     onChangeText={handleChange('fullname')}
                     onBlur={handleBlur('fullname')}
                     value={values.fullname}
-                    placeholderTextColor={'#b3b3b3'}
+                    placeholderTextColor={Colors.placeholder}
                   />
                 </View>
 
@@ -212,7 +212,7 @@ function Page(): JSX.Element {
                     onBlur={handleBlur('bornDate')}
                     value={values.bornDate}
                     readOnly
-                    placeholderTextColor={'#b3b3b3'}
+                    placeholderTextColor={Colors.placeholder}
                   />
                 </TouchableOpacity>
 
@@ -256,7 +256,7 @@ function Page(): JSX.Element {
                     keyboardType="email-address"
                     onBlur={handleBlur('email')}
                     value={values.email}
-                    placeholderTextColor={'#b3b3b3'}
+                    placeholderTextColor={Colors.placeholder}
                   />
                 </View>
 
@@ -289,7 +289,7 @@ function Page(): JSX.Element {
                       secureTextEntry={!showPass}
                       autoCapitalize="none"
                       keyboardType="default"
-                      placeholderTextColor={'#b3b3b3'}
+                      placeholderTextColor={Colors.placeholder}
                     />
                     <TouchableOpacity onPress={() => setShowPass(!showPass)}>
                       <Icon
@@ -326,7 +326,9 @@ function Page(): JSX.Element {
                     borderRadius: 20,
                     alignItems: 'center',
                   }}>
-                  <Text style={[styles.label, {color: 'white'}]}>Sign Up</Text>
+                  <Text style={[styles.label, {color: '#505050'}]}>
+                    Sign Up
+                  </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -403,7 +405,7 @@ const PhoneInput: React.FC = () => {
           }}
           keyboardType="phone-pad"
           onBlur={handleBlurs('phone')}
-          placeholderTextColor={'#b3b3b3'}
+          placeholderTextColor={Colors.placeholder}
           {...maskedInputProps}
         />
       </View>
@@ -447,7 +449,7 @@ const styles = StyleSheet.create({
 
   errorLabel: {
     fontSize: Fonts.size.sm,
-    color: 'red',
+    color: Colors.error,
     fontFamily: Fonts.family.bold,
   },
 

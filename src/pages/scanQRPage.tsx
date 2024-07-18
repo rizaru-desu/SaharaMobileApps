@@ -4,6 +4,7 @@ import {NavigationProp, RouteProp} from '@react-navigation/native';
 import {
   Camera,
   useCameraDevice,
+  useCameraFormat,
   useCodeScanner,
 } from 'react-native-vision-camera';
 import {goBack} from '../config/refNavigation';
@@ -14,6 +15,7 @@ import Header from '../component/header.component';
 import {scanLabelBox} from '../redux/createDRRedux';
 import {useDispatch} from 'react-redux';
 import {addPointLoyalty} from '../redux/initializeRedux';
+import {Alert} from '../component/alert.component';
 
 interface PageProps {
   route: RouteProp<any>;
@@ -24,6 +26,12 @@ function Page({route}: PageProps): JSX.Element {
   const dispatch = useDispatch();
   const device = useCameraDevice('back');
   const [labelQR, setLabelQR] = React.useState<any>(undefined);
+
+  const format = useCameraFormat(device, [
+    {videoAspectRatio: 4 / 5},
+    {videoResolution: {width: 1080, height: 1350}},
+    {fps: 60},
+  ]);
 
   const codeScanner = useCodeScanner({
     codeTypes: ['qr', 'ean-13'],
@@ -44,6 +52,7 @@ function Page({route}: PageProps): JSX.Element {
           device={device}
           isActive={true}
           codeScanner={codeScanner}
+          format={format}
         />
       )}
 
@@ -94,7 +103,17 @@ function Page({route}: PageProps): JSX.Element {
                       currentData: route.params.currentData,
                     });
                   } else {
-                    addPointLoyalty({label: labelQR});
+                    if (labelQR) {
+                      addPointLoyalty({label: labelQR});
+                    } else {
+                      Alert.show({
+                        title: 'Notification',
+                        desc: 'Please Scan barcode or QR-code first.',
+                        onDismiss() {
+                          Alert.hide();
+                        },
+                      });
+                    }
                   }
                 }}
                 titleStyle={styles.labelButton}

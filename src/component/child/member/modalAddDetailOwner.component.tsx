@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
   },
   errorLabel: {
     fontSize: Fonts.size.sm,
-    color: 'red',
+    color: Colors.error,
     fontFamily: Fonts.family.bold,
   },
   labelButton: {fontFamily: Fonts.family.bold, color: 'white'},

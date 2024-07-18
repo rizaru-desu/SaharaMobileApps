@@ -8,7 +8,10 @@ import {
   View,
 } from 'react-native';
 import {Colors, Fonts, Images} from '../assets/assets';
-import {verticalScale as h} from 'react-native-size-matters';
+import {
+  verticalScale as h,
+  moderateVerticalScale,
+} from 'react-native-size-matters';
 import {Formik} from 'formik';
 import {Alert} from '../component/alert.component';
 import {LOGIN_API, SaharaClient} from '../config/apis';
@@ -20,6 +23,7 @@ import FastImage from 'react-native-fast-image';
 import NetInfo from '@react-native-community/netinfo';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DropShadow from 'react-native-drop-shadow';
+import {BlurView} from '@react-native-community/blur';
 
 function Page(): JSX.Element {
   const [showPass, setShowPass] = React.useState<boolean>(false);
@@ -45,7 +49,7 @@ function Page(): JSX.Element {
 
     if (networkConnetion.isConnected && networkConnetion.isInternetReachable) {
       try {
-        Loading.show();
+        Loading.show({title: 'Logingin....'});
         const client = await SaharaClient.post(LOGIN_API, values);
 
         if (client.status === 200) {
@@ -90,18 +94,18 @@ function Page(): JSX.Element {
   return (
     <ImageBackground
       source={Images.logoBG}
-      resizeMode="stretch"
+      resizeMode="cover"
       style={styles.container}>
       <View style={styles.containerImage}>
         <DropShadow
           style={{
-            shadowColor: '#000',
+            shadowColor: '#807569',
             shadowOffset: {
-              width: 2,
-              height: 2,
+              width: 0,
+              height: 0,
             },
             shadowOpacity: 1,
-            shadowRadius: 1,
+            shadowRadius: 0.5,
           }}>
           <FastImage
             style={{width: h(100), height: h(100)}}
@@ -133,10 +137,23 @@ function Page(): JSX.Element {
                   paddingVertical: 50,
                   paddingHorizontal: 10,
                   borderWidth: 2,
-                  borderRadius: 30,
+                  borderRadius: 20,
                   borderColor: 'white',
-                  backgroundColor: '#fffffb4D',
+                  overflow: 'hidden',
+                  backgroundColor: 'rgba(35,43,43, 0.2)',
                 }}>
+                <BlurView
+                  style={{
+                    position: 'absolute',
+                    left: 0,
+                    bottom: 0,
+                    top: 0,
+                    right: 0,
+                  }}
+                  blurType="light"
+                  blurAmount={20}
+                  reducedTransparencyFallbackColor="white"
+                />
                 <View style={styles.containerTextInput}>
                   <View style={styles.containerTextInput}>
                     <TxI
@@ -153,7 +170,7 @@ function Page(): JSX.Element {
                       keyboardType="email-address"
                       onBlur={handleBlur('email')}
                       value={values.email}
-                      placeholderTextColor={'#b3b3b3'}
+                      placeholderTextColor={Colors.placeholder}
                     />
                   </View>
 
@@ -172,7 +189,7 @@ function Page(): JSX.Element {
                       }}>
                       <TxI
                         style={{
-                          width: '95%',
+                          width: '87%',
                           color: 'black',
                           fontFamily: Fonts.family.regular,
                           fontSize: Fonts.size.lg,
@@ -184,13 +201,20 @@ function Page(): JSX.Element {
                         secureTextEntry={!showPass}
                         autoCapitalize="none"
                         keyboardType="default"
-                        placeholderTextColor={'#b3b3b3'}
+                        placeholderTextColor={Colors.placeholder}
                       />
-                      <TouchableOpacity onPress={() => setShowPass(!showPass)}>
+                      <TouchableOpacity
+                        style={{
+                          height: moderateVerticalScale(48),
+                          width: moderateVerticalScale(48),
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}
+                        onPress={() => setShowPass(!showPass)}>
                         <Icon
                           name={showPass ? 'eye-off' : 'eye'}
-                          size={Fonts.size.xl}
-                          color={Colors.primary}
+                          size={moderateVerticalScale(25)}
+                          color={'#AF6420'}
                         />
                       </TouchableOpacity>
                     </View>
@@ -202,6 +226,12 @@ function Page(): JSX.Element {
 
                   <View style={styles.alignForgot}>
                     <TouchableOpacity
+                      style={{
+                        paddingHorizontal: 5,
+                        paddingVertical: 15,
+                        alignItems: 'center',
+                        height: h(48),
+                      }}
                       onPress={() => {
                         navigate({route: 'InitForgotPassPages'});
                       }}>
@@ -213,12 +243,15 @@ function Page(): JSX.Element {
                     onPress={handleSubmit as () => void}
                     style={{
                       paddingHorizontal: 30,
-                      paddingVertical: 10,
+                      paddingVertical: 14,
                       backgroundColor: '#FF6500',
-                      borderRadius: 20,
+                      borderRadius: 1000,
                       alignSelf: 'center',
+                      alignItems: 'center',
                     }}>
-                    <Text style={[styles.label, {color: 'white'}]}>Login</Text>
+                    <Text style={[styles.label, {color: '#1E1E1E'}]}>
+                      Login
+                    </Text>
                   </TouchableOpacity>
 
                   <View style={styles.alignSignUp}>
@@ -230,12 +263,12 @@ function Page(): JSX.Element {
                     }}
                     style={{
                       paddingHorizontal: 30,
-                      paddingVertical: 10,
+                      paddingVertical: 14,
                       backgroundColor: '#FEB941',
-                      borderRadius: 20,
+                      borderRadius: 1000,
                       alignItems: 'center',
                     }}>
-                    <Text style={[styles.label, {color: 'white'}]}>
+                    <Text style={[styles.label, {color: '#505050'}]}>
                       Create Account
                     </Text>
                   </TouchableOpacity>
@@ -269,7 +302,7 @@ const styles = StyleSheet.create({
   containerTextInput: {gap: 10},
 
   label: {
-    fontSize: Fonts.size.md,
+    fontSize: Fonts.size.sm,
     fontFamily: Fonts.family.regular,
     color: Colors.text,
   },
@@ -282,7 +315,7 @@ const styles = StyleSheet.create({
 
   errorLabel: {
     fontSize: Fonts.size.sm,
-    color: 'red',
+    color: Colors.error,
     fontFamily: Fonts.family.bold,
   },
 
@@ -291,7 +324,7 @@ const styles = StyleSheet.create({
   titleLogin: {
     color: Colors.text,
     fontFamily: Fonts.family.bold,
-    fontSize: Fonts.size.lg,
+    fontSize: Fonts.size.md,
     textAlign: 'center',
   },
 

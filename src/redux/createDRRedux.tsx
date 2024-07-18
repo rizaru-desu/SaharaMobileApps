@@ -67,7 +67,7 @@ export const getAgent = async ({dispatch}: {dispatch: any}) => {
 
     if (networkConnetion.isConnected && networkConnetion.isInternetReachable) {
       try {
-        Loading.show();
+        Loading.show({});
 
         const token = await getToken();
 
@@ -137,7 +137,7 @@ export const scanLabelBox = async ({
 
     if (networkConnetion.isConnected && networkConnetion.isInternetReachable) {
       try {
-        Loading.show();
+        Loading.show({});
 
         const token = await getToken();
 
@@ -234,7 +234,7 @@ export const submitDR = async ({
 
     if (networkConnetion.isConnected && networkConnetion.isInternetReachable) {
       try {
-        Loading.show();
+        Loading.show({});
 
         const token = await getToken();
         const fullname = await getFullname();

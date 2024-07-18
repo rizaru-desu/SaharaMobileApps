@@ -5,7 +5,7 @@ import {Formik} from 'formik';
 import {Button, IconButton, TextInput} from '@react-native-material/core';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {goBack} from '../config/refNavigation';
-import {FORGOT_PASS_API, SIGNUP_API, SaharaClient} from '../config/apis';
+import {FORGOT_PASS_API, SaharaClient} from '../config/apis';
 import {Loading} from '../component/loading.component';
 import {Alert} from '../component/alert.component';
 import * as yup from 'yup';
@@ -32,7 +32,7 @@ function Page(): JSX.Element {
 
     if (networkConnetion.isConnected && networkConnetion.isInternetReachable) {
       try {
-        Loading.show();
+        Loading.show({});
         const client = await SaharaClient.post(FORGOT_PASS_API, values);
 
         if (client.status === 200) {
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
 
   errorLabel: {
     fontSize: Fonts.size.sm,
-    color: 'red',
+    color: Colors.error,
     fontFamily: Fonts.family.bold,
   },
 

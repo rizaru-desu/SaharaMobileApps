@@ -167,7 +167,7 @@ const getDetailUser = async ({dispatch}: {dispatch: any}) => {
 
     if (networkConnetion.isConnected && networkConnetion.isInternetReachable) {
       try {
-        Loading.show();
+        Loading.show({});
 
         const token = await getToken();
 
@@ -233,7 +233,7 @@ export const getDahsboardMember = async ({
 
     if (networkConnetion.isConnected && networkConnetion.isInternetReachable) {
       try {
-        Loading.show();
+        Loading.show({});
 
         const token = await getToken();
 
@@ -316,7 +316,7 @@ export const getDashbaoardDR = async ({dispatch}: {dispatch: any}) => {
 
     if (networkConnetion.isConnected && networkConnetion.isInternetReachable) {
       try {
-        Loading.show();
+        Loading.show({});
 
         const token = await getToken();
 
@@ -384,7 +384,7 @@ export const findDR = async ({
 
     if (networkConnetion.isConnected && networkConnetion.isInternetReachable) {
       try {
-        Loading.show();
+        Loading.show({});
 
         const token = await getToken();
 
@@ -449,7 +449,7 @@ export const findProductDR = async ({
 
     if (networkConnetion.isConnected && networkConnetion.isInternetReachable) {
       try {
-        Loading.show();
+        Loading.show({});
 
         const token = await getToken();
 
@@ -525,7 +525,7 @@ export const addDetailOwner = async ({
 
     if (networkConnetion.isConnected && networkConnetion.isInternetReachable) {
       try {
-        Loading.show();
+        Loading.show({});
 
         const token = await getToken();
         const fullname = await getFullname();
@@ -591,7 +591,7 @@ export const addPointLoyalty = async ({label}: {label: any}) => {
 
     if (networkConnetion.isConnected && networkConnetion.isInternetReachable) {
       try {
-        Loading.show();
+        Loading.show({});
 
         const token = await getToken();
         const fullname = await getFullname();

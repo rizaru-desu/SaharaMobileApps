@@ -1,6 +1,5 @@
-import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {moderateScale} from 'react-native-size-matters';
 
-const baseFontSize = hp(1.5);
 export const Fonts = {
   family: {
     regular: 'Roboto-Regular',
@@ -8,11 +7,11 @@ export const Fonts = {
     bold: 'Roboto-Bold',
   },
   size: {
-    xs: baseFontSize * 0.5,
-    sm: baseFontSize * 0.8,
-    md: baseFontSize,
-    lg: baseFontSize * 1.2,
-    xl: baseFontSize * 1.5,
+    xs: moderateScale(10),
+    sm: moderateScale(12),
+    md: moderateScale(15),
+    lg: moderateScale(17),
+    xl: moderateScale(22),
   },
 };
 
@@ -21,6 +20,8 @@ export const Colors = {
   secondary: '#fcb900',
   button: '#eb9c00',
   text: '#000000',
+  error: '#B70701',
+  placeholder: '#797676',
 };
 
 export const Images = {

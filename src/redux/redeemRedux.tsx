@@ -80,7 +80,7 @@ export const getPackage = async ({dispatch}: {dispatch: any}) => {
 
     if (networkConnetion.isConnected && networkConnetion.isInternetReachable) {
       try {
-        Loading.show();
+        Loading.show({});
 
         const token = await getToken();
 
@@ -151,7 +151,7 @@ export const addRedeem = async ({
 
     if (networkConnetion.isConnected && networkConnetion.isInternetReachable) {
       try {
-        Loading.show();
+        Loading.show({});
 
         const token = await getToken();
         const fullname = await getFullname();

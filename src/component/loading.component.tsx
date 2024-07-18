@@ -1,11 +1,11 @@
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
-import Modal from 'react-native-modal';
+import {View, StyleSheet, Text, Modal} from 'react-native';
+//import Modal from 'react-native-modal';
 import {Colors, Fonts} from '../assets/assets';
 import {ActivityIndicator} from 'react-native';
 
 export type LoadingRef = {
-  show: () => void;
+  show: ({title}: {title?: string}) => void;
   hide: () => void;
 };
 
@@ -16,8 +16,8 @@ export class Loading {
     this.alertRef = ref;
   };
 
-  static show = () => {
-    this.alertRef.current?.show();
+  static show = ({title}: {title?: string}) => {
+    this.alertRef.current?.show({title});
   };
 
   static hide = () => {
@@ -27,6 +27,7 @@ export class Loading {
 
 export const LoadingBase = () => {
   const [modalVisible, setModalVisible] = React.useState(false);
+  const [titles, setTitles] = React.useState('');
 
   const modalRef = React.useRef<LoadingRef>();
 
@@ -37,8 +38,9 @@ export const LoadingBase = () => {
   React.useImperativeHandle(
     modalRef,
     () => ({
-      show: () => {
+      show: ({title}: {title?: string}) => {
         setModalVisible(true);
+        setTitles(title ?? '');
       },
       hide: () => {
         setModalVisible(false);
@@ -49,16 +51,43 @@ export const LoadingBase = () => {
 
   return (
     <Modal
-      animationIn={'fadeIn'}
+      /*  animationIn={'fadeIn'}
       animationInTiming={1000}
       animationOutTiming={1000}
-      animationOut={'fadeOut'}
-      backdropOpacity={0.9}
-      style={styles.Modal}
-      isVisible={modalVisible}>
-      <View style={styles.containerContent}>
-        <ActivityIndicator size="large" color={Colors.primary} />
-        <Text style={styles.label}>Please Wait...</Text>
+      animationOut={'fadeOut'} */
+      //backdropOpacity={1}
+
+      presentationStyle="overFullScreen"
+      //isVisible={modalVisible}
+      visible={modalVisible}
+      transparent={true}
+      accessible={true}
+      accessibilityViewIsModal={true}
+      accessibilityLabelledBy="Loading dialog"
+      accessibilityRole="none"
+      accessibilityLabel="Loading dialog"
+      accessibilityHint="Displays a loading indicator and a message to wait">
+      <View
+        style={styles.Modal}
+        accessible={true}
+        accessibilityLabel="Modal content container parent">
+        <View
+          accessible={true}
+          accessibilityLabel="Modal content container"
+          style={styles.containerContent}>
+          <ActivityIndicator
+            accessible={true}
+            accessibilityLabel="Loading indicator"
+            size="large"
+            color={Colors.primary}
+          />
+          <Text
+            accessible={true}
+            accessibilityLabel="Loading message"
+            style={styles.label}>
+            {titles ? titles : 'Please Wait...'}
+          </Text>
+        </View>
       </View>
     </Modal>
   );
@@ -66,12 +95,14 @@ export const LoadingBase = () => {
 
 const styles = StyleSheet.create({
   Modal: {
-    justifyContent: 'center',
+    flex: 1,
+    backgroundColor: '#000000',
     alignItems: 'center',
-    margin: 10,
+    justifyContent: 'center',
   },
 
   containerContent: {
+    justifyContent: 'center',
     borderColor: Colors.button,
     backgroundColor: 'white',
     flexDirection: 'row',
@@ -79,6 +110,7 @@ const styles = StyleSheet.create({
     gap: 10,
     borderRadius: 10,
     alignItems: 'center',
+    alignSelf: 'center',
   },
 
   label: {
